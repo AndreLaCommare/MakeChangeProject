@@ -23,6 +23,7 @@ public class MakeChange {
 		// System.out.println(itemCentsOnly);
 		// Coins(itemCentsOnly);
 		int tenderDollarsOnly = (int) tender;
+		double tenderCentsOnly = tender - tenderDollarsOnly;
 		int changeInDollars = tenderDollarsOnly - itemDollarsOnly;
 
 		if (changeInDollars % 20 >= 0 && (int) (changeInDollars / 20) != 0) {
@@ -57,7 +58,7 @@ public class MakeChange {
 		}
 		// System.out.println(changeInDollars);
 		if ((changeInDollars / 1) >= 1) {
-			if (changeInDollars <= 2) {
+			if (changeInDollars < 2) {
 				changeInDollars -= 1;
 			}
 			int numOfOnes = (int) (changeInDollars / 1);
@@ -66,17 +67,24 @@ public class MakeChange {
 			}
 		}
 
-		Coins(itemCentsOnly);
+		Coins(tenderCentsOnly, itemCentsOnly);
 
 		// double totalReturn = tender - itemPrice;
 		// System.out.println(totalReturn);
 
 	}
 
-	public static void Coins(double change) {
-		change = 1.00 - change;
-		// System.out.println(change);
-		change = (change + .005) * 100;
+	public static void Coins(double tenderCents, double itemCents) {
+
+		double change = 0.0;
+
+		if (tenderCents > itemCents) {
+			change = (tenderCents - itemCents) * 100;
+		} else {
+			change = 1.00 - itemCents;
+			// System.out.println(change);
+			change = (change + .005) * 100;
+		}
 
 		if (change % 25 >= 0 && (int) (change / 25) != 0) {
 			int numOfQuarters = (int) (change / 25);
@@ -107,7 +115,6 @@ public class MakeChange {
 			// System.out.println(change);
 		}
 		// System.out.println((int)change);
-
 	}
 
 }
