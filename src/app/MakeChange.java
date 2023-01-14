@@ -12,10 +12,13 @@ public class MakeChange {
 		
 		if(itemPrice > tender) {
 			System.out.println("Invalid Purchase: Not Enough Funds");
+			return;
 		}
 		
 		int itemDollarsOnly = (int) itemPrice;
 		double itemCentsOnly = itemPrice - itemDollarsOnly;
+		System.out.println(itemCentsOnly);
+		//Coins(itemCentsOnly);
 		int tenderDollarsOnly = (int)tender;
 		int changeInDollars = tenderDollarsOnly - itemDollarsOnly;
 		
@@ -34,10 +37,13 @@ public class MakeChange {
 			System.out.println("You are getting " + numOfFives + " five dollar bill(s) back.");
 			changeInDollars = (int)(changeInDollars %= 5);
 		}
-		if (changeInDollars % 1 == 0 && (int)(changeInDollars/1) != 0) {
+		if ((changeInDollars/1) >= 1) {
+				changeInDollars -= 1;
+			
 			int numOfOnes = (int)(changeInDollars/1);
-			System.out.println("You are getting " + numOfOnes + " one dollar bill(s) back.");
-			changeInDollars = (int)(changeInDollars %= 1);
+			if (numOfOnes > 0) {
+				System.out.println("You are getting " + numOfOnes + " one dollar bill(s) back.");
+			}
 		}
 		
 		Coins(itemCentsOnly);
@@ -56,6 +62,7 @@ public class MakeChange {
 	
 	public static void Coins(double change) {
 		change = 1.00 - change;
+		//System.out.println(change);
 		change = (change + .005) * 100;
 		
 		if (change % 25 >= 0 && (int)(change /25) != 0) {
@@ -79,7 +86,8 @@ public class MakeChange {
 			//System.out.println("inside nickels");
 			//System.out.println(change);
 		}
-		if (change % 1 == 0 && (int)(change/1) != 0) {
+		//System.out.println((int)change);
+		if ((int)(change/1) != 0) {
 			int numOfPennies = (int)(change/1);
 			System.out.println("You are getting " + numOfPennies + " penny(ies) back.");
 			//System.out.println("inside pennies");
