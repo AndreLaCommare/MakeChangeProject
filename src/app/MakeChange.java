@@ -19,9 +19,6 @@ public class MakeChange {
 
 		int itemDollarsOnly = (int) itemPrice;
 		double itemCentsOnly = itemPrice - itemDollarsOnly;
-		// System.out.println("here");
-		// System.out.println(itemCentsOnly);
-		// Coins(itemCentsOnly);
 		int tenderDollarsOnly = (int) tender;
 		double tenderCentsOnly = tender - tenderDollarsOnly;
 		int changeInDollars = tenderDollarsOnly - itemDollarsOnly;
@@ -56,9 +53,9 @@ public class MakeChange {
 			}
 			changeInDollars = (int) (changeInDollars %= 5);
 		}
-		// System.out.println(changeInDollars);
+
 		if ((changeInDollars / 1) >= 1) {
-			if (changeInDollars < 2) {
+			if (changeInDollars > 1 && changeInDollars < 2) {
 				changeInDollars -= 1;
 			}
 			int numOfOnes = (int) (changeInDollars / 1);
@@ -69,9 +66,6 @@ public class MakeChange {
 
 		Coins(tenderCentsOnly, itemCentsOnly);
 
-		// double totalReturn = tender - itemPrice;
-		// System.out.println(totalReturn);
-
 	}
 
 	public static void Coins(double tenderCents, double itemCents) {
@@ -80,41 +74,38 @@ public class MakeChange {
 
 		if (tenderCents > itemCents) {
 			change = (tenderCents - itemCents) * 100;
-		} else {
+		} else if (tenderCents < itemCents) {
 			change = 1.00 - itemCents;
-			// System.out.println(change);
+
 			change = (change + .005) * 100;
+		} else {
+			return;
 		}
 
 		if (change % 25 >= 0 && (int) (change / 25) != 0) {
 			int numOfQuarters = (int) (change / 25);
 			System.out.println("You are getting " + numOfQuarters + " quarter(s) back.");
 			change = (int) (change %= 25);
-			// System.out.println("inside quarters");
-			// System.out.println(change);
 		}
 		if (change % 10 >= 0 && (int) (change / 10) != 0) {
 			int numOfDimes = (int) (change / 10);
 			System.out.println("You are getting " + numOfDimes + " dime(s) back.");
 			change = (int) (change %= 10);
-			// System.out.println("inside dimes");
-			// System.out.println(change);
+
 		}
 		if (change % 5 >= 0 && (int) (change / 5) != 0) {
 			int numOfNickels = (int) (change / 5);
 			System.out.println("You are getting " + numOfNickels + " nickel(s) back.");
 			change = (int) (change %= 5);
-			// System.out.println("inside nickels");
-			// System.out.println(change);
+
 		}
-		// System.out.println((int)change);
+
 		if ((int) (change / 1) != 0) {
 			int numOfPennies = (int) (change / 1);
 			System.out.println("You are getting " + numOfPennies + " penny(ies) back.");
-			// System.out.println("inside pennies");
-			// System.out.println(change);
+
 		}
-		// System.out.println((int)change);
+
 	}
 
 }
