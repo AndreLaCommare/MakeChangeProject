@@ -14,6 +14,13 @@ public class MakeChange {
 
 		if (itemPrice > tender) {
 			System.out.println("Invalid Purchase: Not Enough Funds");
+			kb.close();
+			return;
+
+		}
+		if (itemPrice == tender) {
+			System.out.println("You paid with exact change.");
+			kb.close();
 			return;
 		}
 
@@ -24,6 +31,7 @@ public class MakeChange {
 		int changeInDollars = tenderDollarsOnly - itemDollarsOnly;
 		if (tender - itemPrice < 1) {
 			Coins(tenderCentsOnly, itemCentsOnly);
+			kb.close();
 			return;
 		}
 
@@ -58,8 +66,8 @@ public class MakeChange {
 			changeInDollars = (int) (changeInDollars %= 5);
 		}
 		if ((changeInDollars / 1) >= 1) {
-			
-			if (changeInDollars > 1 && changeInDollars < 2) {
+
+			if (changeInDollars > 1 && itemCentsOnly > 0) {
 				changeInDollars -= 1;
 			}
 			int numOfOnes = (int) (changeInDollars / 1);
@@ -69,6 +77,7 @@ public class MakeChange {
 		}
 
 		Coins(tenderCentsOnly, itemCentsOnly);
+		kb.close();
 
 	}
 
