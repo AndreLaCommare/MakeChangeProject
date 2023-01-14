@@ -10,11 +10,38 @@ public class MakeChange {
 		System.out.println("Please enter the amount you have to pay:");
 		double tender = kb.nextDouble();
 		
-		int itemDollarsOnly = (int) itemPrice;
+		if(itemPrice > tender) {
+			System.out.println("Invalid Purchase: Not Enough Funds");
+		}
 		
+		int itemDollarsOnly = (int) itemPrice;
 		double itemCentsOnly = itemPrice - itemDollarsOnly;
+		int tenderDollarsOnly = (int)tender;
+		int changeInDollars = tenderDollarsOnly - itemDollarsOnly;
+		
+		if (changeInDollars % 20 >= 0 && (int)(changeInDollars/20) != 0) {
+			int numOfTwenties = (int)(changeInDollars/20);
+			System.out.println("You are getting " + numOfTwenties + " twenty dollar bill(s) back.");
+			changeInDollars = (int)(changeInDollars %= 20);
+		}
+		if (changeInDollars % 10 >= 0 && (int)(changeInDollars/10) != 0) {
+			int numOfTens = (int)(changeInDollars/10);
+			System.out.println("You are getting " + numOfTens + " ten dollar bill(s) back.");
+			changeInDollars = (int)(changeInDollars %= 10);
+		}
+		if (changeInDollars % 5 >= 0 && (int)(changeInDollars/5) != 0) {
+			int numOfFives = (int)(changeInDollars/5);
+			System.out.println("You are getting " + numOfFives + " five dollar bill(s) back.");
+			changeInDollars = (int)(changeInDollars %= 5);
+		}
+		if (changeInDollars % 1 == 0 && (int)(changeInDollars/1) != 0) {
+			int numOfOnes = (int)(changeInDollars/1);
+			System.out.println("You are getting " + numOfOnes + " one dollar bill(s) back.");
+			changeInDollars = (int)(changeInDollars %= 1);
+		}
 		
 		Coins(itemCentsOnly);
+		
 		
 		
 		
@@ -59,7 +86,10 @@ public class MakeChange {
 			//System.out.println(change);
 		}
 		//System.out.println((int)change);
+		
 	}
+	
+	
 	
 	
 
