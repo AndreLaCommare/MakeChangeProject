@@ -22,6 +22,10 @@ public class MakeChange {
 		int tenderDollarsOnly = (int) tender;
 		double tenderCentsOnly = tender - tenderDollarsOnly;
 		int changeInDollars = tenderDollarsOnly - itemDollarsOnly;
+		if (tender - itemPrice < 1) {
+			Coins(tenderCentsOnly, itemCentsOnly);
+			return;
+		}
 
 		if (changeInDollars % 20 >= 0 && (int) (changeInDollars / 20) != 0) {
 			if (changeInDollars <= 21) {
@@ -53,8 +57,8 @@ public class MakeChange {
 			}
 			changeInDollars = (int) (changeInDollars %= 5);
 		}
-
 		if ((changeInDollars / 1) >= 1) {
+			
 			if (changeInDollars > 1 && changeInDollars < 2) {
 				changeInDollars -= 1;
 			}
