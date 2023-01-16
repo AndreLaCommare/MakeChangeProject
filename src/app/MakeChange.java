@@ -12,113 +12,124 @@ public class MakeChange {
 		System.out.println("Please enter the amount you have to pay:");
 		double tender = kb.nextDouble();
 
+		double change = tender - itemPrice;
+		change = Math.round(change * 100);
+		change /= 100;
+
+		int changeDollarsOnly = (int) change;
+		
+
+		double cents = change - changeDollarsOnly;
+		cents = Math.round(cents * 100);
+		cents /= 100;
+		
 		if (itemPrice > tender) {
-			System.out.println("Invalid Purchase: Not Enough Funds");
-			kb.close();
+			System.out.println("Invalid Funds");
 			return;
-
-		}
-		if (itemPrice == tender) {
+		}else if (itemPrice == tender) {
 			System.out.println("You paid with exact change.");
-			kb.close();
 			return;
 		}
+		
+		
 
-		int itemDollarsOnly = (int) itemPrice;
-		double itemCentsOnly = itemPrice - itemDollarsOnly;
-		int tenderDollarsOnly = (int) tender;
-		double tenderCentsOnly = tender - tenderDollarsOnly;
-		int changeInDollars = tenderDollarsOnly - itemDollarsOnly;
-		if (tender - itemPrice < 1) {
-			Coins(tenderCentsOnly, itemCentsOnly);
-			kb.close();
-			return;
-		}
+		dollars(changeDollarsOnly);
 
-		if (changeInDollars % 20 >= 0 && (int) (changeInDollars / 20) != 0) {
-			if (changeInDollars <= 21) {
-				changeInDollars -= 1;
-			}
-			int numOfTwenties = (int) (changeInDollars / 20);
-			if (numOfTwenties > 0) {
-				System.out.println("You are getting " + numOfTwenties + " twenty dollar bill(s) back.");
-			}
-			changeInDollars = (int) (changeInDollars %= 20);
-		}
-		if (changeInDollars % 10 >= 0 && (int) (changeInDollars / 10) != 0) {
-			if (changeInDollars <= 11) {
-				changeInDollars -= 1;
-			}
-			int numOfTens = (int) (changeInDollars / 10);
-			if (numOfTens > 0) {
-				System.out.println("You are getting " + numOfTens + " ten dollar bill(s) back.");
-			}
-			changeInDollars = (int) (changeInDollars %= 10);
-		}
-		if (changeInDollars % 5 >= 0 && (int) (changeInDollars / 5) != 0) {
-			if (changeInDollars <= 6) {
-				changeInDollars -= 1;
-			}
-			int numOfFives = (int) (changeInDollars / 5);
-			if (numOfFives > 0) {
-				System.out.println("You are getting " + numOfFives + " five dollar bill(s) back.");
-			}
-			changeInDollars = (int) (changeInDollars %= 5);
-		}
-		if ((changeInDollars / 1) >= 1) {
-
-			if (changeInDollars > 1 && itemCentsOnly > 0) {
-				changeInDollars -= 1;
-			}
-			int numOfOnes = (int) (changeInDollars / 1);
-			if (numOfOnes > 0) {
-				System.out.println("You are getting " + numOfOnes + " one dollar bill(s) back.");
-			}
-		}
-
-		Coins(tenderCentsOnly, itemCentsOnly);
-		kb.close();
+		coins(cents);
 
 	}
 
-	public static void Coins(double tenderCents, double itemCents) {
+	public static void coins(double cents) {
+		int quarterCount = 0;
+		while (cents >= .25) {
 
-		double change = 0.0;
-
-		if (tenderCents > itemCents) {
-			change = (tenderCents - itemCents) * 100;
-		} else if (tenderCents < itemCents) {
-			change = 1.00 - itemCents;
-
-			change = (change + .005) * 100;
-		} else {
-			return;
-		}
-
-		if (change % 25 >= 0 && (int) (change / 25) != 0) {
-			int numOfQuarters = (int) (change / 25);
-			System.out.println("You are getting " + numOfQuarters + " quarter(s) back.");
-			change = (int) (change %= 25);
-		}
-		if (change % 10 >= 0 && (int) (change / 10) != 0) {
-			int numOfDimes = (int) (change / 10);
-			System.out.println("You are getting " + numOfDimes + " dime(s) back.");
-			change = (int) (change %= 10);
+			quarterCount++;
+			cents -= .25;
 
 		}
-		if (change % 5 >= 0 && (int) (change / 5) != 0) {
-			int numOfNickels = (int) (change / 5);
-			System.out.println("You are getting " + numOfNickels + " nickel(s) back.");
-			change = (int) (change %= 5);
+		if (!(quarterCount == 0)) {
+			System.out.println("You are getting " + quarterCount + " quarter(s) back.");
+		}
+		int dimeCount = 0;
+		while (cents >= .1) {
+
+			dimeCount++;
+			cents -= .1;
 
 		}
+		if (!(dimeCount == 0)) {
+			System.out.println("You are getting " + dimeCount + " dime(s) back.");
+		}
+		int nickelCount = 0;
+		while (cents >= .05) {
 
-		if ((int) (change / 1) != 0) {
-			int numOfPennies = (int) (change / 1);
-			System.out.println("You are getting " + numOfPennies + " penny(ies) back.");
+			nickelCount++;
+			cents -= .05;
 
 		}
+		if (!(nickelCount == 0)) {
+			System.out.println("You are getting " + nickelCount + " nickel(s) back.");
+		}
 
+		int pennyCount = 0;
+		while (cents > 0) { // rounding error when condition was cents >= .01;
+
+			pennyCount++;
+			cents -= .01;
+
+		}
+		if (!(pennyCount == 0)) {
+			System.out.println("You are getting " + pennyCount + " penny(ies) back.");
+		}
+
+	}
+
+	public static void dollars(double changeDollarsOnly) {
+	
+		int twentiesCount = 0;
+		while (changeDollarsOnly >= 20) {
+
+			twentiesCount++;
+			changeDollarsOnly -= 20;
+
+		}
+		if (!(twentiesCount == 0)) {
+			System.out.println("You are getting " + twentiesCount + " twenty(ies) back.");
+		}
+		
+		
+		int tensCount = 0;
+		while (changeDollarsOnly >= 10) {
+
+			tensCount++;
+			changeDollarsOnly -= 10;
+
+		}
+		if (!(tensCount == 0)) {
+			System.out.println("You are getting " + tensCount + " ten(s) back.");
+		}
+		
+		int fivesCount = 0;
+		while (changeDollarsOnly >= 5) {
+
+			fivesCount++;
+			changeDollarsOnly -= 5;
+
+		}
+		if (!(fivesCount == 0)) {
+			System.out.println("You are getting " + fivesCount + " five(s) back.");
+		}
+		
+		int onesCount = 0;
+		while (changeDollarsOnly >= 1) {
+
+			onesCount++;
+			changeDollarsOnly -= 1;
+
+		}
+		if (!(onesCount == 0)) {
+			System.out.println("You are getting " + onesCount + " one(s) back.");
+		}
 	}
 
 }
